@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.bodik.logic.Student" table="students">
+
+		<id column="id" name="id" type="java.lang.Long">
+			<generator class="increment" />
+		</id>
+
+		<property column="name" name="name" type="java.lang.String" />
+		<property column="year_of_study" name="year_of_study" type="java.lang.Byte" />
+		<property column="birthday" name="birthday" type="java.sql.Date" />
+		<property column="is_stipend" name="is_stipend" type="java.lang.Boolean" />
+		<property column="gpa" name="gpa" type="java.lang.Float" />
+
+	</class>
+</hibernate-mapping>
