@@ -2,18 +2,16 @@ package com.bodik.resources;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bodik.DAO.StudentDAO;
 import com.bodik.logic.Student;
@@ -26,84 +24,78 @@ public class RestController {
 	StudentDAO studentDAO;
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public String addStudent(HttpServletResponse httpRes,
-			@RequestBody Student student) {
+	public ResponseEntity<String> addStudent(@RequestBody Student student) {
 		try {
 			studentDAO.addEntity(student);
-			httpRes.setStatus(HttpStatus.OK.value());
-			return "Student added Successfully!";
+			return new ResponseEntity<String>("Student added Successfully!",
+					HttpStatus.CREATED);
 		} catch (Exception e) {
 			Logger.getLogger(RestController.class).error(
 					"Error creating user!", e);
-			httpRes.setStatus(HttpStatus.BAD_REQUEST.value());
-			return "Error creating user!";
+			return new ResponseEntity<String>("Error creating user!",
+					HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public @ResponseBody Student getStudent(HttpServletResponse httpRes,
-			@PathVariable("id") long id) {
+	public ResponseEntity<Student> getStudent(@PathVariable("id") long id) {
 		Student student = null;
 		try {
 			student = studentDAO.getEntityById(id);
 			if (student != null) {
-				httpRes.setStatus(HttpStatus.OK.value());
+				return new ResponseEntity<Student>(student, HttpStatus.OK);
 			} else {
-				httpRes.setStatus(HttpStatus.NOT_FOUND.value());
+				return new ResponseEntity<Student>(student,
+						HttpStatus.NOT_FOUND);
 			}
 		} catch (Exception e) {
-			httpRes.setStatus(HttpStatus.NOT_FOUND.value());
 			Logger.getLogger(RestController.class).error("Error loading data!",
 					e);
-			return student;
+			return new ResponseEntity<Student>(student, HttpStatus.NOT_FOUND);
 		}
-		return student;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public @ResponseBody List<Student> getStudents(HttpServletResponse httpRes) {
+	public ResponseEntity<List<Student>> getStudents() {
 		List<Student> studentList = null;
 		try {
 			studentList = studentDAO.getEntityAll();
-			httpRes.setStatus(HttpStatus.OK.value());
+			return new ResponseEntity<List<Student>>(studentList, HttpStatus.OK);
 		} catch (Exception e) {
-			httpRes.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
 			Logger.getLogger(RestController.class).error("Error loading data!",
 					e);
+			return new ResponseEntity<List<Student>>(studentList,
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return studentList;
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public @ResponseBody String deleteStudents(HttpServletResponse httpRes,
-			@PathVariable("id") long id) {
+	public ResponseEntity<String> deleteStudents(@PathVariable("id") long id) {
 		try {
 			studentDAO.deleteEntity(id);
-			httpRes.setStatus(HttpStatus.OK.value());
-			return "Student deleted Successfully!";
+			return new ResponseEntity<String>("Student deleted Successfully!",
+					HttpStatus.OK);
 		} catch (Exception e) {
 			Logger.getLogger(RestController.class)
 					.error("Failed to remove the student, a student may not exist!",
 							e);
-			httpRes.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-			return "Failed to remove the student, a student may not exist!!";
+			return new ResponseEntity<String>(
+					"Failed to remove the student, a student may not exist!",
+					HttpStatus.NOT_FOUND);
 		}
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public String updateStudent(HttpServletResponse httpRes,
-			@RequestBody Student student) {
+	public ResponseEntity<String> updateStudent(@RequestBody Student student) {
 		try {
 			studentDAO.updateEntity(student);
-			httpRes.setStatus(HttpStatus.OK.value());
-			return "Student updated Successfully!";
+			return new ResponseEntity<String>("Student updated Successfully!",
+					HttpStatus.OK);
 		} catch (Exception e) {
 			Logger.getLogger(RestController.class).error(
-					"Error updating user!", e);
-			httpRes.setStatus(HttpStatus.BAD_REQUEST.value());
-			return "Error updating user!";
+					"Error updating Student!", e);
+			return new ResponseEntity<String>("Error updating Student!",
+					HttpStatus.BAD_REQUEST);
 		}
 	}
 

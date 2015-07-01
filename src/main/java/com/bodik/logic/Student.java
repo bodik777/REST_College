@@ -22,19 +22,19 @@ public class Student implements Serializable {
 	@Column(name = "id")
 	private Long id;
 
-	@Column(name = "name")
+	@Column(name = "name", nullable = false)
 	private String name;
 
-	@Column(name = "year_of_study")
+	@Column(name = "year_of_study", nullable = false)
 	private Byte year_of_study;
 
-	@Column(name = "birthday")
+	@Column(name = "birthday", nullable = false)
 	private Date birthday;
 
-	@Column(name = "is_stipend")
+	@Column(name = "is_stipend", nullable = false)
 	private Boolean is_stipend;
 
-	@Column(name = "gpa")
+	@Column(name = "gpa", nullable = false)
 	private Float gpa;
 
 	public Student() {
