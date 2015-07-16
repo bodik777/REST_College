@@ -13,20 +13,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.bodik.DAO.StudentDAO;
 import com.bodik.logic.Student;
+import com.bodik.services.StudentServices;
+
 
 @Controller
 @RequestMapping("/students")
 public class RestController {
 
 	@Autowired
-	StudentDAO studentDAO;
+	StudentServices studentServices;
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> addStudent(@RequestBody Student student) {
 		try {
-			studentDAO.addEntity(student);
+			studentServices.addEntity(student);
 			return new ResponseEntity<String>("Student added Successfully!",
 					HttpStatus.CREATED);
 		} catch (Exception e) {
@@ -41,7 +42,7 @@ public class RestController {
 	public ResponseEntity<Student> getStudent(@PathVariable("id") long id) {
 		Student student = null;
 		try {
-			student = studentDAO.getEntityById(id);
+			student = studentServices.getEntityById(id);
 			if (student != null) {
 				return new ResponseEntity<Student>(student, HttpStatus.OK);
 			} else {
@@ -59,7 +60,7 @@ public class RestController {
 	public ResponseEntity<List<Student>> getStudents() {
 		List<Student> studentList = null;
 		try {
-			studentList = studentDAO.getEntityAll();
+			studentList = studentServices.getEntityAll();
 			return new ResponseEntity<List<Student>>(studentList, HttpStatus.OK);
 		} catch (Exception e) {
 			Logger.getLogger(RestController.class).error("Error loading data!",
@@ -72,7 +73,7 @@ public class RestController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> deleteStudents(@PathVariable("id") long id) {
 		try {
-			studentDAO.deleteEntity(id);
+			studentServices.deleteEntity(id);
 			return new ResponseEntity<String>("Student deleted Successfully!",
 					HttpStatus.OK);
 		} catch (Exception e) {
@@ -88,7 +89,7 @@ public class RestController {
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> updateStudent(@RequestBody Student student) {
 		try {
-			studentDAO.updateEntity(student);
+			studentServices.updateEntity(student);
 			return new ResponseEntity<String>("Student updated Successfully!",
 					HttpStatus.OK);
 		} catch (Exception e) {

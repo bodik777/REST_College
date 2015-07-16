@@ -13,7 +13,7 @@
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/college" />
+		<property name="url" value="jdbc:mysql://localhost:3306/college_DB" />
 		<property name="username" value="root" />
 		<property name="password" value="admin" />
 	</bean>
@@ -42,5 +42,6 @@
 	<bean id="persistenceExceptionTranslationPostProcessor"
 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
-	<bean id="studentDAO" class="com.bodik.DAO.StudentDAOImpl"></bean>
+	<bean id="studentDAO" class="com.bodik.dao.StudentDAOImpl"></bean>
+	<bean id="studentServices" class="com.bodik.services.StudentServicesImpl"></bean>
 </beans>

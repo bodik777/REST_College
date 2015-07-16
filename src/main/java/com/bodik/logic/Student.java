@@ -25,17 +25,23 @@ public class Student implements Serializable {
 	@Column(name = "name", nullable = false)
 	private String name;
 
-	@Column(name = "year_of_study", nullable = false)
-	private Byte year_of_study;
+	@Column(name = "surname", nullable = false)
+	private String surname;
+
+	@Column(name = "middle_name", nullable = false)
+	private String middle_name;
 
 	@Column(name = "birthday", nullable = false)
 	private Date birthday;
 
-	@Column(name = "is_stipend", nullable = false)
-	private Boolean is_stipend;
+	@Column(name = "group_id", nullable = false)
+	private Long group_id;
 
 	@Column(name = "gpa", nullable = false)
 	private Float gpa;
+
+	@Column(name = "is_stipend", nullable = false)
+	private Boolean is_stipend;
 
 	public Student() {
 	}
@@ -56,12 +62,20 @@ public class Student implements Serializable {
 		this.name = name;
 	}
 
-	public Byte getYear_of_study() {
-		return year_of_study;
+	public String getSurname() {
+		return surname;
 	}
 
-	public void setYear_of_study(Byte year_of_study) {
-		this.year_of_study = year_of_study;
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public String getMiddle_name() {
+		return middle_name;
+	}
+
+	public void setMiddle_name(String middle_name) {
+		this.middle_name = middle_name;
 	}
 
 	public Date getBirthday() {
@@ -72,12 +86,12 @@ public class Student implements Serializable {
 		this.birthday = birthday;
 	}
 
-	public Boolean getIs_stipend() {
-		return is_stipend;
+	public Long getGroup_id() {
+		return group_id;
 	}
 
-	public void setIs_stipend(Boolean is_stipend) {
-		this.is_stipend = is_stipend;
+	public void setGroup_id(Long group_id) {
+		this.group_id = group_id;
 	}
 
 	public Float getGpa() {
@@ -88,4 +102,11 @@ public class Student implements Serializable {
 		this.gpa = gpa;
 	}
 
+	public Boolean getIs_stipend() {
+		return is_stipend;
+	}
+
+	public void setIs_stipend(Boolean is_stipend) {
+		this.is_stipend = is_stipend;
+	}
 }

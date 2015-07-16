@@ -1,4 +1,4 @@
-package com.bodik.DAO;
+package com.bodik.dao;
 
 import java.util.List;
 

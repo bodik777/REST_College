@@ -1,10 +1,10 @@
-package com.bodik.DAO;
+package com.bodik.services;
 
 import java.util.List;
 
 import com.bodik.logic.Student;
 
-public interface StudentDAO {
+public interface StudentServices {
 
 	public boolean addEntity(Student student) throws Exception;
 
